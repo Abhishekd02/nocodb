@@ -193,7 +193,7 @@ const canUserEditEmote = computed(() => {
                 <GeneralIcon icon="duplicate" class="text-gray-700" />
                 {{ $t('general.duplicate') }}
               </NcMenuItem>
-
+              <NcDivider />
               <NcMenuItem
                 v-if="isUIAllowed('tableDelete', { roles: projectRole })"
                 :data-testid="`sidebar-table-delete-${table.title}`"
