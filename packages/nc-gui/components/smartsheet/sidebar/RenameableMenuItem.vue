@@ -270,10 +270,11 @@ watch(rightSidebarState, () => {
               </NcButton>
 
               <template v-if="!vModel.is_default">
+                <NcDivider class="!m-0" />
                 <NcButton
                   type="text"
                   size="small"
-                  class="nc-view-delete-icon w-full !hover:bg-gray-200 !rounded-none"
+                  class="nc-view-delete-icon w-full !hover:bg-red-50 !rounded-none"
                   :centered="false"
                   @click.stop="onDelete"
                 >
