@@ -251,7 +251,7 @@ watch(rightSidebarState, () => {
                 :centered="false"
                 @click.stop="onDblClick"
               >
-                <div class="flex flex-row items-center gap-x-2 pl-2 text-xs">
+                <div class="flex flex-row items-center gap-x-2 pl-2 text-dropdown">
                   <GeneralIcon icon="edit" />
                   Rename
                 </div>
@@ -263,7 +263,7 @@ watch(rightSidebarState, () => {
                 :centered="false"
                 @click.stop="onDuplicate"
               >
-                <div class="flex flex-row items-center gap-x-2 pl-1.5 text-xs">
+                <div class="flex flex-row items-center gap-x-2 pl-1.5 text-dropdown">
                   <GeneralIcon icon="copy" class="text-base" />
                   Duplicate
                 </div>
@@ -278,7 +278,7 @@ watch(rightSidebarState, () => {
                   :centered="false"
                   @click.stop="onDelete"
                 >
-                  <div class="flex flex-row items-center gap-x-2.25 pl-1.75 text-red-400 text-xs">
+                  <div class="flex flex-row items-center gap-x-2.25 pl-1.75 text-red-400 text-dropdown">
                     <GeneralIcon icon="delete" />
                     Delete
                   </div>
