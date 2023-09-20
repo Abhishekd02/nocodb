@@ -22,6 +22,8 @@ const router = useRouter()
 
 const route = router.currentRoute
 
+const emptyProject = ref(false)
+
 const { projectsList } = storeToRefs(projectsStore)
 
 const autoNavigateToProject = async () => {
@@ -93,6 +95,20 @@ function toggleDialog(value?: boolean, key?: string, dsState?: string, pId?: str
 }
 
 provide(ToggleDialogInj, toggleDialog)
+
+watch(
+  () => projectsStore.projectsList.length,
+  (v) => {
+    if (projectsStore.projectsList.length)
+      emptyProject.value = false
+    else
+      emptyProject.value = true
+    console.log(emptyProject.value)
+  },
+  {
+    flush: 'post',
+  },
+)
 </script>
 
 <template>
@@ -108,15 +124,14 @@ provide(ToggleDialogInj, toggleDialog)
         <DashboardSidebar />
       </template>
       <template #content>
-        <NuxtPage />
+        <NuxtPage v-if="!emptyProject" />
+        <div v-else>
+          <ProjectEmptyPlaceholder />
+        </div>
       </template>
     </NuxtLayout>
-    <LazyDashboardSettingsModal
-      v-model:model-value="dialogOpen"
-      v-model:open-key="openDialogKey"
-      v-model:data-sources-state="dataSourcesState"
-      :project-id="projectId"
-    />
+    <LazyDashboardSettingsModal v-model:model-value="dialogOpen" v-model:open-key="openDialogKey"
+      v-model:data-sources-state="dataSourcesState" :project-id="projectId" />
   </div>
 </template>
 

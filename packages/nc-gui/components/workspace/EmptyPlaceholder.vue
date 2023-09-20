@@ -15,18 +15,16 @@ const openCreateProjectDlg = (type: NcProjectType) => {
 </script>
 
 <template>
-  <div class="flex items-center justify-center mt-8">
+  <div class="pt-5 pl-10 flex justify-start">
     <div class="flex flex-col gap-4 items-center text-gray-500">
       <NcIconsInbox />
       <div class="font-medium text-gray-500">No Projects in workspace</div>
-      <div class="flex gap-2 justify mt-1">
-        <NcButton @click="openCreateProjectDlg(NcProjectType.DB)">
-          <div class="flex gap-2 items-center justify-center text-xs">
-            <GeneralIcon icon="plus" class="text-lg" />
-            <div class="mb-[0.5px]">New Project</div>
-          </div>
-        </NcButton>
-      </div>
+      <NcButton @click="openCreateProjectDlg(NcProjectType.DB)">
+        <div class="flex gap-2 items-center justify-center text-xs">
+          <GeneralIcon icon="plus" />
+          <div class="mb-[0.5px]">New Project</div>
+        </div>
+      </NcButton>
     </div>
   </div>
   <WorkspaceCreateProjectDlg v-model="projectCreateDlg" />

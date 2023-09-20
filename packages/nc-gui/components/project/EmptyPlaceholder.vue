@@ -5,10 +5,6 @@ import {NcProjectType} from '#imports'
 const projectType = ref()
 const projectCreateDlg = ref(false)
 
-const { isUIAllowed } = useUIPermission()
-
-const { allRoles } = useRoles()
-
 const openCreateProjectDlg = (type: NcProjectType) => {
     projectType.value = type
     projectCreateDlg.value = true
@@ -26,7 +22,7 @@ const openCreateProjectDlg = (type: NcProjectType) => {
         <h1 class="text-xl font-medium">
             Get started by creating a new project ..
         </h1>
-        <div v-if="isUIAllowed('tableCreate', false, stringifyRolesObj(allRoles))" class="flex flex-row gap-x-6 pb-3 pt-6">
+        <div class="flex flex-row gap-x-6 pb-3 pt-6">
             <div class="nc-project-view-all-table-btn" data-testid="proj-view-btn__add-new-table"
                 @click="openCreateProjectDlg(NcProjectType.DB)">
                 <GeneralIcon icon="addOutlineBox" />
