@@ -178,7 +178,7 @@ watch(rightSidebarState, () => {
 </script>
 
 <template>
-  <a-menu-item
+  <NcMenuItem
     class="!min-h-8 !max-h-8 !mb-0.25 select-none group text-gray-700 !flex !items-center !mt-0 hover:(!bg-gray-100 !text-gray-900)"
     :data-testid="`view-sidebar-view-${vModel.alias || vModel.title}`"
     @dblclick.stop="onDblClick"
@@ -230,64 +230,36 @@ watch(rightSidebarState, () => {
               '!visible': isDropdownOpen,
             }"
           >
-            <NcButton
-              type="text"
-              size="xsmall"
-              class="nc-view-sidebar-node-context-btn !px-1 !hover:bg-gray-200"
+            <a-radio-button
+              disable-ripple
+              class="nc-view-sidebar-node-context-btn !px-1 !border-none !bg-inherit !tr !hover:text-gray-900"
               @click.stop="isDropdownOpen = !isDropdownOpen"
             >
               <GeneralIcon icon="threeDotVertical" class="-mt-0.5" />
-            </NcButton>
+            </a-radio-button>
           </div>
           <template #overlay>
-            <div
-              class="flex flex-col items-center min-w-27"
-              :data-testid="`view-sidebar-view-actions-${vModel.alias || vModel.title}`"
-            >
-              <NcButton
-                type="text"
-                size="small"
-                class="w-full !rounded-none !hover:bg-gray-200"
-                :centered="false"
-                @click.stop="onDblClick"
-              >
-                <div class="flex flex-row items-center gap-x-2 pl-2 text-dropdown">
-                  <GeneralIcon icon="edit" />
-                  Rename
-                </div>
-              </NcButton>
-              <NcButton
-                type="text"
-                size="small"
-                class="nc-view-copy-icon w-full !rounded-none !hover:bg-gray-200"
-                :centered="false"
-                @click.stop="onDuplicate"
-              >
-                <div class="flex flex-row items-center gap-x-2 pl-1.5 text-dropdown">
-                  <GeneralIcon icon="copy" class="text-base" />
-                  Duplicate
-                </div>
-              </NcButton>
+            <NcMenu :data-testid="`view-sidebar-view-actions-${vModel.alias || vModel.title}`">
+              <NcMenuItem size="small" :centered="false" @click.stop="onDblClick">
+                <GeneralIcon icon="edit" />
+                Rename
+              </NcMenuItem>
+              <NcMenuItem size="small" :centered="false" @click.stop="onDuplicate">
+                <GeneralIcon icon="copy" class="text-base" />
+                Duplicate
+              </NcMenuItem>
 
               <template v-if="!vModel.is_default">
-                <NcDivider class="!m-0" />
-                <NcButton
-                  type="text"
-                  size="small"
-                  class="nc-view-delete-icon w-full !hover:bg-red-50 !rounded-none"
-                  :centered="false"
-                  @click.stop="onDelete"
-                >
-                  <div class="flex flex-row items-center gap-x-2.25 pl-1.75 text-red-400 text-dropdown">
-                    <GeneralIcon icon="delete" />
-                    Delete
-                  </div>
-                </NcButton>
+                <NcDivider />
+                <NcMenuItem size="small" class="nc-view-delete-icon !text-red-600 !hover:bg-red-50" @click.stop="onDelete">
+                  <GeneralIcon icon="delete" />
+                  Delete
+                </NcMenuItem>
               </template>
-            </div>
+            </NcMenu>
           </template>
         </NcDropdown>
       </template>
     </div>
-  </a-menu-item>
+  </NcMenuItem>
 </template>
