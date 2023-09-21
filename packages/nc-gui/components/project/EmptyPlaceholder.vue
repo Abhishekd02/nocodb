@@ -24,7 +24,7 @@ const openCreateProjectDlg = (type: NcProjectType) => {
         <h4 class="text-sm font-semibold text-gray-400 mb-10">
             Looks like you don't have any project in this workspace
         </h4>
-        <h1 class="text-xl font-medium">
+        <h1 v-if="isUIAllowed('tableCreate', { roles: projectRole })" class="text-xl font-medium">
             Get started by creating a new project ..
         </h1>
         <div v-if="isUIAllowed('tableCreate', { roles: projectRole })" class="flex flex-row gap-x-6 pb-3 pt-6">
