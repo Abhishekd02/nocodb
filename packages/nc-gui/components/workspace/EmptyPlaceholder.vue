@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { NcProjectType, ProjectRoleInj } from '#imports'
+import { NcProjectType } from '#imports'
 
 const props = defineProps<{
   buttons?: boolean
@@ -9,9 +9,9 @@ const projectCreateDlg = ref(false)
 
 const projectType = ref()
 
-const { isUIAllowed } = useRoles()
+const workspaceStore = useWorkspace()
 
-const projectRole = inject(ProjectRoleInj)
+const { isWorkspaceOwnerOrCreator} = storeToRefs(workspaceStore)
 
 const openCreateProjectDlg = (type: NcProjectType) => {
   projectType.value = type
@@ -24,7 +24,7 @@ const openCreateProjectDlg = (type: NcProjectType) => {
     <div class="flex flex-col gap-4 items-center text-gray-500">
       <NcIconsInbox />
       <div class="font-medium text-gray-500">No Projects in workspace</div>
-      <NcButton v-if="isUIAllowed('tableCreate', { roles: projectRole })" @click="openCreateProjectDlg(NcProjectType.DB)">
+      <NcButton v-if="isWorkspaceOwnerOrCreator" @click="openCreateProjectDlg(NcProjectType.DB)">
         <div class="flex gap-2 items-center justify-center text-xs">
           <GeneralIcon icon="plus" />
           <div class="mb-[0.5px]">New Project</div>
