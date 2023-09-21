@@ -94,21 +94,26 @@ function toggleDialog(value?: boolean, key?: string, dsState?: string, pId?: str
   projectId.value = pId || ''
 }
 
+const setProjectStatus = () => {
+  if (projectsStore.projectsList.length)
+    emptyProject.value = false
+  else
+    emptyProject.value = true
+}
+
 provide(ToggleDialogInj, toggleDialog)
 
 watch(
   () => projectsStore.projectsList.length,
-  (v) => {
-    if (projectsStore.projectsList.length)
-      emptyProject.value = false
-    else
-      emptyProject.value = true
-    console.log(emptyProject.value)
+  () => {
+    setProjectStatus()
   },
   {
     flush: 'post',
   },
 )
+
+setProjectStatus()
 </script>
 
 <template>
@@ -125,9 +130,7 @@ watch(
       </template>
       <template #content>
         <NuxtPage v-if="!emptyProject" />
-        <div v-else>
-          <ProjectEmptyPlaceholder />
-        </div>
+        <ProjectEmptyPlaceholder v-else />
       </template>
     </NuxtLayout>
     <LazyDashboardSettingsModal v-model:model-value="dialogOpen" v-model:open-key="openDialogKey"

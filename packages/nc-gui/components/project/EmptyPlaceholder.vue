@@ -1,14 +1,19 @@
 <script lang="ts" setup>
-import { stringifyRolesObj } from 'nocodb-sdk'
-import {NcProjectType} from '#imports'
+import { NcProjectType, ProjectRoleInj } from '#imports'
 
 const projectType = ref()
+
 const projectCreateDlg = ref(false)
+
+const { isUIAllowed } = useRoles()
+
+const projectRole = inject(ProjectRoleInj)
 
 const openCreateProjectDlg = (type: NcProjectType) => {
     projectType.value = type
     projectCreateDlg.value = true
 }
+
 </script>
 
 <template>
@@ -22,12 +27,16 @@ const openCreateProjectDlg = (type: NcProjectType) => {
         <h1 class="text-xl font-medium">
             Get started by creating a new project ..
         </h1>
-        <div class="flex flex-row gap-x-6 pb-3 pt-6">
+        <div v-if="isUIAllowed('tableCreate', { roles: projectRole })" class="flex flex-row gap-x-6 pb-3 pt-6">
             <div class="nc-project-view-all-table-btn" data-testid="proj-view-btn__add-new-table"
                 @click="openCreateProjectDlg(NcProjectType.DB)">
                 <GeneralIcon icon="addOutlineBox" />
                 <div class="label">{{ $t('general.new') }} {{ $t('general.empty') }} {{ $t('objects.project') }}</div>
             </div>
+        </div>
+        <div v-else class="h-[50vh] flex flex-col items-center justify-center text-white">
+            <NcIconsInbox class="w-56 h-56" />
+            <div class="font-medium text-black">No Projects in workspace</div>
         </div>
     </div>
     <WorkspaceCreateProjectDlg v-model="projectCreateDlg" />
@@ -37,12 +46,12 @@ const openCreateProjectDlg = (type: NcProjectType) => {
 .nc-project-view-all-table-btn {
     @apply flex flex-col gap-y-6 p-4 bg-gray-100 rounded-xl w-56 cursor-pointer text-gray-600 hover: (bg-gray-100 !text-black);
 
-    .nc-icon {
-        @apply h-10 w-10;
-    }
-
     .label {
         @apply text-base font-medium;
     }
+}
+
+.nc-project-view-all-table-btn-disabled {
+    @apply flex flex-col gap-y-6 p-4 bg-gray-100 rounded-xl w-56 text-gray-400 text-md;
 }
 </style>
